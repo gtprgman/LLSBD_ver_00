@@ -112,7 +112,8 @@ void RecordSet<_wlc>::closeSet() {
 template <class StructType>
 void DisposeSet(StructType* linkSet) {
 	size_t _nRefCounts = 0;
-
+	StructType* _pDel = linkSet;
+	
 	// calculates number of references count to the linked-list clusters in the memory
 	while (NULL != linkSet) {
 		++_nRefCounts;
