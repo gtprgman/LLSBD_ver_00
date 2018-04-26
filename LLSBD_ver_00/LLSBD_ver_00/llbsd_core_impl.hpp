@@ -124,9 +124,18 @@ void DisposeSet(StructType* linkSet) {
 
 	// constructs a garbage collector for any unused references to linked-list clusters in the memory
 	vector<StructType*> _garbages(_nRefCounts);
+	
+	
+	// collecting unused references junk from the linked-list's bind
+	for (size_t i = 0; i < _nRefCounts; i++) 
+		_garbages.push_back(&_pDel[i]);
+
+	_pDel = nullptr;
+	
 
 	// disposing any unused references junk in the garbages container
-	for (vector<StructType*>::iterator vit = _garbages.begin(); vit != _garbages.end(); ++vit) free(*vit);
+	for (vector<StructType*>::pointer vit = &_garbages[0]; vit != &_garbages[_nRefCounts-1]; vit++) free(*vit);
+
 
 
 }
